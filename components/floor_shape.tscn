@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://cugvnx6sg548h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nn5n1"]
+size = Vector2(1399.5, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0b0u"]
+size = Vector2(20, 820)
+
+[node name="floorShape" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="floor" type="CollisionShape2D" parent="."]
+position = Vector2(700, -10)
+shape = SubResource("RectangleShape2D_nn5n1")
+
+[node name="ceiling" type="CollisionShape2D" parent="."]
+position = Vector2(700, -810)
+shape = SubResource("RectangleShape2D_nn5n1")
+
+[node name="leftWall" type="CollisionShape2D" parent="."]
+position = Vector2(10, -410)
+shape = SubResource("RectangleShape2D_y0b0u")
+
+[node name="rightWall" type="CollisionShape2D" parent="."]
+position = Vector2(1390, -410)
+shape = SubResource("RectangleShape2D_y0b0u")

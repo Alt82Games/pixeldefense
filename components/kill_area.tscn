@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dj6v4xa2s4wsp"]
+
+[ext_resource type="Script" uid="uid://bd7uajsi8y7rr" path="res://components/KillArea.cs" id="1_8h2nj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3x2ag"]
+size = Vector2(2352.75, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8h2nj"]
+size = Vector2(20, 1547)
+
+[node name="killArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 22
+script = ExtResource("1_8h2nj")
+
+[node name="floor" type="CollisionShape2D" parent="."]
+position = Vector2(1176.63, 721)
+shape = SubResource("RectangleShape2D_3x2ag")
+
+[node name="ceiling" type="CollisionShape2D" parent="."]
+position = Vector2(1177, -810)
+shape = SubResource("RectangleShape2D_3x2ag")
+
+[node name="leftWall" type="CollisionShape2D" parent="."]
+position = Vector2(10, -46.5)
+shape = SubResource("RectangleShape2D_8h2nj")
+
+[node name="rightWall" type="CollisionShape2D" parent="."]
+position = Vector2(2343, -46)
+shape = SubResource("RectangleShape2D_8h2nj")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dramqfyhx6kco"]
+
+[ext_resource type="Script" uid="uid://16iyrco8lgl4" path="res://entities/spawners/EnemySpawner.cs" id="1_8x1j0"]
+[ext_resource type="Texture2D" uid="uid://c6hwtx0n4aim0" path="res://icon.svg" id="2_res7t"]
+
+[node name="enemySpawner" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+monitoring = false
+monitorable = false
+script = ExtResource("1_8x1j0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_res7t")
+
+[node name="spawnTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true

@@ -1,0 +1,42 @@
+[gd_scene load_steps=10 format=3 uid="uid://dmcwbhqy5asix"]
+
+[ext_resource type="PackedScene" uid="uid://cugvnx6sg548h" path="res://components/floor_shape.tscn" id="1_gkh1h"]
+[ext_resource type="Script" uid="uid://bavgt6hupu33w" path="res://levels/Level00.cs" id="1_q5upp"]
+[ext_resource type="PackedScene" uid="uid://bl30s22fj1a8n" path="res://components/game_manager.tscn" id="1_sj2j1"]
+[ext_resource type="PackedScene" uid="uid://rxal76kd04a7" path="res://components/main_camera.tscn" id="2_wybcj"]
+[ext_resource type="PackedScene" uid="uid://dnooqy0e1dob8" path="res://components/hud.tscn" id="3_iqu7t"]
+[ext_resource type="PackedScene" uid="uid://b5x2afn2mw05g" path="res://entities/enemy_unit_base.tscn" id="3_q2qjg"]
+[ext_resource type="PackedScene" uid="uid://dj6v4xa2s4wsp" path="res://components/kill_area.tscn" id="4_mmdti"]
+[ext_resource type="PackedScene" uid="uid://dramqfyhx6kco" path="res://entities/spawners/enemy_spawner.tscn" id="5_y1gos"]
+[ext_resource type="PackedScene" uid="uid://bwhdscwp8j25q" path="res://entities/base.tscn" id="9_hk1ki"]
+
+[node name="level00" type="Node2D"]
+script = ExtResource("1_q5upp")
+
+[node name="gameManager" parent="." instance=ExtResource("1_sj2j1")]
+
+[node name="MainCamera" parent="." instance=ExtResource("2_wybcj")]
+position = Vector2(693, -381)
+
+[node name="hud" parent="." instance=ExtResource("3_iqu7t")]
+
+[node name="floorShape" parent="." instance=ExtResource("1_gkh1h")]
+
+[node name="killArea" parent="." instance=ExtResource("4_mmdti")]
+position = Vector2(-422, -324)
+
+[node name="enemyFolder" type="Node2D" parent="."]
+
+[node name="enemySpawner" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(132, -44)
+
+[node name="enemySpawner2" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(204, -215)
+
+[node name="enemySpawner3" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(30, -344)
+
+[node name="enemyUnitBase" parent="enemyFolder" instance=ExtResource("3_q2qjg")]
+position = Vector2(242, -158)
+
+[node name="base" parent="." instance=ExtResource("9_hk1ki")]

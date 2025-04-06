@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnooqy0e1dob8"]
+
+[ext_resource type="Script" uid="uid://dtm0lgfvkk3o2" path="res://components/Hud.cs" id="1_636fb"]
+[ext_resource type="PackedScene" uid="uid://r53bd8ictwv0" path="res://components/general_button.tscn" id="2_nk167"]
+
+[node name="hud" type="CanvasLayer"]
+script = ExtResource("1_636fb")
+
+[node name="svpc" type="SubViewportContainer" parent="."]
+z_index = 1
+offset_right = 288.0
+offset_bottom = 192.0
+
+[node name="svp" type="SubViewport" parent="svpc"]
+handle_input_locally = false
+size = Vector2i(288, 192)
+render_target_update_mode = 4
+
+[node name="subCamera" type="Camera2D" parent="svpc/svp"]
+
+[node name="Line2D" type="Line2D" parent="svpc"]
+position = Vector2(144, 96)
+points = PackedVector2Array(-144, 96, 144, 96, 144, -96, -144, -96)
+closed = true
+width = 2.0
+
+[node name="points" type="Label" parent="."]
+z_index = 2
+offset_right = 42.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 20
+text = "Text"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="updatePointsTimer" type="Timer" parent="points"]
+wait_time = 0.25
+autostart = true
+
+[node name="fps" type="Label" parent="."]
+z_index = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_bottom = 28.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/font_size = 20
+text = "Text"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="buttons" type="HBoxContainer" parent="."]
+visible = false
+z_index = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="skillUpgrade1" parent="buttons" instance=ExtResource("2_nk167")]
+layout_mode = 2
+skillUpgradeNumber = 1
+
+[node name="skillUpgrade2" parent="buttons" instance=ExtResource("2_nk167")]
+layout_mode = 2
+text = "Upgrade 
+button 2"
+skillUpgradeNumber = 2
+
+[node name="skillUpgrade3" parent="buttons" instance=ExtResource("2_nk167")]
+layout_mode = 2
+text = "Upgrade 
+button 3"
+skillUpgradeNumber = 3
