@@ -15,7 +15,7 @@ public partial class Level00 : Node2D
     public override void _Ready()
     {
         gameManager = GetTree().Root.GetChild(0).GetNode<GameManager>("gameManager");
-        target = GetNode<Node2D>("base");
+        target      = GetNode<Node2D>("base");
         subCamera   = GetNode<Camera2D>("hud/svpc/svp/subCamera");
         svport      = GetNode<SubViewport>("hud/svpc/svp");
         //GD.Print(target.GlobalPosition);

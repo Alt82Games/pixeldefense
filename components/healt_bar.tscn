@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy6bw166jpsa5"]
+
+[ext_resource type="Texture2D" uid="uid://55ws780ubvud" path="res://art/healtbar1.png" id="1_ti5pn"]
+[ext_resource type="Script" uid="uid://6yukhfmteb4o" path="res://components/HealtBar.cs" id="2_ti5pn"]
+
+[node name="healtBar" type="TextureProgressBar"]
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(2, 2)
+value = 50.0
+texture_under = ExtResource("1_ti5pn")
+texture_progress = ExtResource("1_ti5pn")
+tint_under = Color(0.721569, 0, 0, 1)
+tint_progress = Color(0, 0.678431, 0, 1)
+script = ExtResource("2_ti5pn")

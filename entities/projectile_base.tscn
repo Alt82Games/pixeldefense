@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bimopotdb6x5q"]
+
+[ext_resource type="Texture2D" uid="uid://ccpdanw8i7hpc" path="res://art/00C.png" id="1_3qxbp"]
+[ext_resource type="Script" uid="uid://be3viikxomluw" path="res://entities/ProjectileBase.cs" id="1_b27y3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b27y3"]
+
+[node name="projectileBase" type="Area2D" groups=["Projectile"]]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource("1_b27y3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." groups=["Projectile"]]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_3qxbp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_b27y3")
+
+[node name="despawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="onScreen" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-1.19209e-07, -1.19209e-07)

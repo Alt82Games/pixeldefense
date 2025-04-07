@@ -6,15 +6,17 @@ public partial class Hud : CanvasLayer
 {
     Label fps;
     Label points;
-    Timer updatePointsTimer;
+    Label projectiles;
+    Timer updateLabelsTimer;
     GameManager gameManager;
     public override void _Ready(){
         gameManager = GetTree().Root.GetChild(0).GetNode<GameManager>("gameManager");
         fps = GetNode<Label>("fps");
         fps.Text = Engine.GetFramesPerSecond().ToString();
         points = GetNode<Label>("points");
-        updatePointsTimer = GetNode<Timer>("points/updatePointsTimer");
-        updatePointsTimer.Timeout += OnUpdatePointsTimerTimeout;
+        updateLabelsTimer = GetNode<Timer>("updateLabelsTimer");
+        updateLabelsTimer.Timeout += OnupdateLabelsTimerTimeout;
+        projectiles = GetNode<Label>("projectiles");
 
     }
     public override void _PhysicsProcess(double delta)
@@ -25,17 +27,18 @@ public partial class Hud : CanvasLayer
 
     public override void _ExitTree()
     {
-        updatePointsTimer.Timeout -= OnUpdatePointsTimerTimeout;
+        updateLabelsTimer.Timeout -= OnupdateLabelsTimerTimeout;
         base._ExitTree();
     }
 
-    private void OnUpdatePointsTimerTimeout()
+    private void OnupdateLabelsTimerTimeout()
     {
-        setPoints();
+        setLabels();
     }
 
-    public void setPoints(){
-        points.Text = "Points: " + gameManager.CurrentPoints;
+    public void setLabels(){
+        points.Text = "Enemy Count: " + gameManager.EnemyCount;
+        projectiles.Text = "Projectile Count: " + gameManager.ProjectileCount;
     }
 
 }

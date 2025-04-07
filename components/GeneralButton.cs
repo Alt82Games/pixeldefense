@@ -20,8 +20,8 @@ public partial class GeneralButton : Button
                 GD.Print("Upgrade click a "+ gameManager.BaseClickDamage*2 + " de daño por click");
             break;
             case 2:
-                gameManager.BaseProjectileDamage = gameManager.BaseProjectileDamage*2.0f;
-                GD.Print("Upgrade projectil a "+ gameManager.BaseProjectileDamage*2.0f + " de daño");
+                //gameManager.BaseProjectileDamage = gameManager.BaseProjectileDamage*2.0f;
+                //GD.Print("Upgrade projectil a "+ gameManager.BaseProjectileDamage*2.0f + " de daño");
             break;
             case 3:
                 float firespeed = gameManager.FireSpeedActual*0.9f;

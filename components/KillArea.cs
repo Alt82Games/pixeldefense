@@ -28,7 +28,13 @@ public partial class KillArea : Area2D
 
     private void OnAreaEntered(Area2D area)
     {
-        gameManager.queueFreeList.Add(area);
+        //area.QueueFree();
+        if(area.IsInGroup("Enemy")){
+            gameManager.EnemyCount -= 1;
+            gameManager.queueFreeList.Add(area);
+        }
+        
+        
     }
 
     //Custom functions----------------------------------------------------

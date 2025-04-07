@@ -7,9 +7,9 @@ public partial class MainCamera : Camera2D
     int cameraTargetIndex = 0;
     Vector2 cameraUD = new Vector2(0,cameraSpeed);
     Vector2 cameraLR = new Vector2(cameraSpeed,0);
-    Vector2 []zoom = {new Vector2(1,1), new Vector2(2,2)};
+    Vector2 []zoom = {new Vector2(0.5f,0.5f),new Vector2(1,1), new Vector2(2,2)};
     Vector2 zoomStep = new Vector2(0.1f,0.1f);
-    Vector2 maxZoom = new Vector2(3,3), minZoom = new Vector2(1f,1f);
+    Vector2 maxZoom = new Vector2(3,3), minZoom = new Vector2(0.5f,0.5f);
     public override void _Ready()
     {
         base._Ready();

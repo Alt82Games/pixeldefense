@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dmcwbhqy5asix"]
+[gd_scene load_steps=11 format=3 uid="uid://dmcwbhqy5asix"]
 
 [ext_resource type="PackedScene" uid="uid://cugvnx6sg548h" path="res://components/floor_shape.tscn" id="1_gkh1h"]
 [ext_resource type="Script" uid="uid://bavgt6hupu33w" path="res://levels/Level00.cs" id="1_q5upp"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dj6v4xa2s4wsp" path="res://components/kill_area.tscn" id="4_mmdti"]
 [ext_resource type="PackedScene" uid="uid://dramqfyhx6kco" path="res://entities/spawners/enemy_spawner.tscn" id="5_y1gos"]
 [ext_resource type="PackedScene" uid="uid://bwhdscwp8j25q" path="res://entities/base.tscn" id="9_hk1ki"]
+[ext_resource type="PackedScene" uid="uid://dkvnaic8dqdj0" path="res://entities/spawners/projectile_spawner.tscn" id="9_u4dht"]
 
 [node name="level00" type="Node2D"]
 script = ExtResource("1_q5upp")
@@ -23,20 +24,26 @@ position = Vector2(693, -381)
 [node name="floorShape" parent="." instance=ExtResource("1_gkh1h")]
 
 [node name="killArea" parent="." instance=ExtResource("4_mmdti")]
-position = Vector2(-422, -324)
+position = Vector2(-455, -289)
 
 [node name="enemyFolder" type="Node2D" parent="."]
 
 [node name="enemySpawner" parent="enemyFolder" instance=ExtResource("5_y1gos")]
-position = Vector2(132, -44)
-
-[node name="enemySpawner2" parent="enemyFolder" instance=ExtResource("5_y1gos")]
-position = Vector2(204, -215)
-
-[node name="enemySpawner3" parent="enemyFolder" instance=ExtResource("5_y1gos")]
-position = Vector2(30, -344)
+position = Vector2(126, -107)
 
 [node name="enemyUnitBase" parent="enemyFolder" instance=ExtResource("3_q2qjg")]
-position = Vector2(242, -158)
+position = Vector2(449, 296)
+
+[node name="allyFolder" type="Node2D" parent="."]
+
+[node name="projectileSpawner" parent="allyFolder" instance=ExtResource("9_u4dht")]
+position = Vector2(766, -331)
+
+[node name="projectileSpawner2" parent="allyFolder" instance=ExtResource("9_u4dht")]
+position = Vector2(1020, -74)
+
+[node name="projectileSpawner3" parent="allyFolder" instance=ExtResource("9_u4dht")]
+position = Vector2(390, -253)
 
 [node name="base" parent="." instance=ExtResource("9_hk1ki")]
+position = Vector2(1420, -39)
