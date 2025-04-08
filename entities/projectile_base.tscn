@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://be3viikxomluw" path="res://entities/ProjectileBase.cs" id="1_b27y3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b27y3"]
+radius = 7.0
 
 [node name="projectileBase" type="Area2D" groups=["Projectile"]]
 collision_layer = 16

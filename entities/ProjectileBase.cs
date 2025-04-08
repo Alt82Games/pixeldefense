@@ -8,7 +8,7 @@ public partial class ProjectileBase : Area2D
     [Export]int projectileDamage = 0;
 
     //TODO: Change pierce when the upgrade system is on progress, get it from GameManager
-    protected int enemiesToPierce = 1;
+    protected int enemiesToPierce = 0;
     protected bool isUsed = false;
     float stepsPredicted;
 
@@ -43,13 +43,12 @@ public partial class ProjectileBase : Area2D
         onScreen.ScreenEntered += OnScreenNotifierEntered;
         onScreen.ScreenExited  += OnScreenNotifierExited;
 
-
-
         tickOffset = GD.Randi() % 60;
 
 
         base._Ready();
     }
+
 
     public override void _PhysicsProcess(double delta)
     {
@@ -86,7 +85,10 @@ public partial class ProjectileBase : Area2D
     }
     private void OnDespawnTimerTimeout()
     {
-        clearProjectile();
+        if(!isUsed){
+            clearProjectile();
+        }
+
         
     }
     private void OnAreaEntered(Area2D area)
@@ -96,7 +98,8 @@ public partial class ProjectileBase : Area2D
             EnemyUnitBase a = (EnemyUnitBase)area;
             a.reciveDamage(projectileDamage);
             enemiesToPierce --;
-            if(enemiesToPierce < 0){
+            if(enemiesToPierce < 0 && !isUsed){
+                isUsed = true;
                 clearProjectile();
             }
         }
@@ -126,12 +129,12 @@ public partial class ProjectileBase : Area2D
         float distance1 = dist;
         float steps = distance1/speed;
         
-        targetPredictedPosition = targetInitialPosition + target.directionToObjective*(target.Speed*steps);
+        targetPredictedPosition = targetInitialPosition + target.DirectionToObjective*(target.Speed*steps);
         
         float distance2 = this.GlobalPosition.DistanceTo(targetPredictedPosition);
         float steps2 = distance2/speed;
         
-        targetPredictedPositionTuned = targetInitialPosition + target.directionToObjective*(target.Speed*steps2);        
+        targetPredictedPositionTuned = targetInitialPosition + target.DirectionToObjective*(target.Speed*steps2);        
         if(targetPredictedPosition.DistanceTo(targetPredictedPositionTuned) > 0.01){
             return calculateInterceptionPoint(distance2);
         }
@@ -154,6 +157,8 @@ public partial class ProjectileBase : Area2D
         }
         
     }
+
+
 
     public EnemyUnitBase Target{get{return target;} set{target = value;}}
     public Vector2 DirectionToObjective{get{return directionToObjective;}}

@@ -15,5 +15,4 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_res7t")
 
 [node name="spawnTimer" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true

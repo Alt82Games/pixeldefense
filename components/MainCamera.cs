@@ -10,8 +10,10 @@ public partial class MainCamera : Camera2D
     Vector2 []zoom = {new Vector2(0.5f,0.5f),new Vector2(1,1), new Vector2(2,2)};
     Vector2 zoomStep = new Vector2(0.1f,0.1f);
     Vector2 maxZoom = new Vector2(3,3), minZoom = new Vector2(0.5f,0.5f);
+    Vector2 currentZoom = Vector2.Zero;
     public override void _Ready()
     {
+        currentZoom = Zoom;
         base._Ready();
     }
     public override void _PhysicsProcess(double delta)
@@ -45,23 +47,37 @@ public partial class MainCamera : Camera2D
             */
         }
         if(Input.IsActionJustReleased("ZoomIn")){
-            GD.Print("x");
-            if (Zoom + zoomStep < maxZoom){
-                Zoom += zoomStep;
+            if (currentZoom < maxZoom){
+                currentZoom += zoomStep;
+                if(currentZoom > maxZoom){
+                    currentZoom = maxZoom;
+                }
             }
-            else{
+        }
+            
+        
+        if(Input.IsActionJustReleased("ZoomOut")){
+            if (currentZoom > minZoom){
+                currentZoom -= zoomStep;
+                if(currentZoom < minZoom){
+                    currentZoom = minZoom;
+                }
+            }
+        }
+
+        if(Zoom < currentZoom){
+            Zoom += zoomStep/10;
+            if (Zoom > maxZoom){
                 Zoom = maxZoom;
             }
         }
-        if(Input.IsActionJustReleased("ZoomOut")){
-            GD.Print("-x");
-            if (Zoom - zoomStep > minZoom){
-                Zoom -= zoomStep;
-            }
-            else{
+        else if(Zoom > currentZoom){
+            Zoom -= zoomStep/10;
+            if (Zoom < minZoom){
                 Zoom = minZoom;
             }
         }
+
     }
 /*
     public void updateZoom(){

@@ -4,19 +4,21 @@
 [ext_resource type="Script" uid="uid://bnl2fw0qtt5tb" path="res://entities/spawners/ProjectileSpawner.cs" id="1_xli1f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xli1f"]
-size = Vector2(620, 620)
+size = Vector2(1998, 620)
 
 [node name="projectileSpawner" type="Area2D"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_xli1f")
+projectileDamage = 100
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_cipm7")
 
 [node name="spawnTimer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.25
 autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_xli1f")

@@ -22,14 +22,31 @@ position = Vector2(693, -381)
 [node name="hud" parent="." instance=ExtResource("3_iqu7t")]
 
 [node name="floorShape" parent="." instance=ExtResource("1_gkh1h")]
+position = Vector2(-197, 0)
 
 [node name="killArea" parent="." instance=ExtResource("4_mmdti")]
-position = Vector2(-455, -289)
+position = Vector2(-1006, -289)
+scale = Vector2(1.4, 1.4)
 
 [node name="enemyFolder" type="Node2D" parent="."]
 
 [node name="enemySpawner" parent="enemyFolder" instance=ExtResource("5_y1gos")]
-position = Vector2(126, -107)
+position = Vector2(-750, -92)
+
+[node name="enemySpawner2" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(-718, -262)
+
+[node name="enemySpawner3" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(-755, -438)
+
+[node name="enemySpawner4" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(2076, -100)
+
+[node name="enemySpawner5" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(2024, -270)
+
+[node name="enemySpawner6" parent="enemyFolder" instance=ExtResource("5_y1gos")]
+position = Vector2(2071, -446)
 
 [node name="enemyUnitBase" parent="enemyFolder" instance=ExtResource("3_q2qjg")]
 position = Vector2(449, 296)
@@ -37,13 +54,32 @@ position = Vector2(449, 296)
 [node name="allyFolder" type="Node2D" parent="."]
 
 [node name="projectileSpawner" parent="allyFolder" instance=ExtResource("9_u4dht")]
-position = Vector2(766, -331)
+position = Vector2(519, -65)
+projectileDamage = 30
 
 [node name="projectileSpawner2" parent="allyFolder" instance=ExtResource("9_u4dht")]
-position = Vector2(1020, -74)
+position = Vector2(433, -205)
+projectileDamage = 30
 
 [node name="projectileSpawner3" parent="allyFolder" instance=ExtResource("9_u4dht")]
-position = Vector2(390, -253)
+position = Vector2(501, -355)
+projectileDamage = 30
+
+[node name="projectileSpawner4" parent="allyFolder" instance=ExtResource("9_u4dht")]
+position = Vector2(819, -65)
+projectileDamage = 30
+
+[node name="projectileSpawner5" parent="allyFolder" instance=ExtResource("9_u4dht")]
+position = Vector2(872, -205)
+projectileDamage = 30
+
+[node name="projectileSpawner6" parent="allyFolder" instance=ExtResource("9_u4dht")]
+position = Vector2(801, -355)
+projectileDamage = 30
 
 [node name="base" parent="." instance=ExtResource("9_hk1ki")]
-position = Vector2(1420, -39)
+position = Vector2(675, -39)
+
+[node name="playTime" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true

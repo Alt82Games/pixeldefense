@@ -10,6 +10,7 @@ public partial class Level00 : Node2D
     Node2D target;
     Camera2D subCamera;
     SubViewport svport;
+    Timer playTime;
 
     //Overrided functions-------------------------------------------------
     public override void _Ready()
@@ -20,10 +21,19 @@ public partial class Level00 : Node2D
         svport      = GetNode<SubViewport>("hud/svpc/svp");
         //GD.Print(target.GlobalPosition);
 
+        playTime    = GetNode<Timer>("playTime");
+
         gameManager.PlayerBasePosition = target.GlobalPosition;
         setSubCamera();
         base._Ready();
     }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+    }
+
+
 
     //Signal functions----------------------------------------------------
 

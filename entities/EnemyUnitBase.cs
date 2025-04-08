@@ -4,11 +4,12 @@ using System;
 public partial class EnemyUnitBase : Area2D
 {
     //Variables and constants---------------------------------------------
-    float maxHealt = 100;
-    float currentHealt = 100;
-    int speed = 100;
-    bool isOnFloor = false;
+    protected float maxHealt = 100;
+    protected float currentHealt = 100;
+    protected int speed = 200;
+    protected bool isOnFloor = false;
 
+    protected bool direction = true;
     
     protected int level = 1;
     protected int basePointsGiven = 7;
@@ -16,25 +17,26 @@ public partial class EnemyUnitBase : Area2D
     protected bool isDead = false;
 
 
-    Vector2 gravity = new Vector2(0,98f);
-    static Vector2 gravityDead = new Vector2(0,98f);
-	Vector2 velocity = new Vector2(100,0); //TODO: Make it for the two directions
+    protected Vector2 gravity = new Vector2(0,98f);
+    protected static Vector2 gravityDead = new Vector2(0,98f);
+	protected Vector2 velocity; //TODO: Make it for the two directions
     //Vector2 targetDirection = new Vector2(1,0);
-    Vector2 dashJump = Vector2.Zero;
-    public Vector2 directionToObjective = Vector2.Zero;
-    Vector2 target,currentPosition,lastPosition;
-    Vector2 initialVelocityDead = new Vector2(-200,-980);
-    double lastDelta = 0;
+    protected Vector2 dashJump = Vector2.Zero;
+    protected Vector2 directionToObjective = Vector2.Zero;
+    protected Vector2 target,currentPosition,lastPosition;
+    protected Vector2 initialVelocityDead = new Vector2(-200,-980);
+    protected double lastDelta = 0;
 
     uint tickOffset;
         
     //Node references-----------------------------------------------------
-    GameManager gameManager;
-    RayCast2D floorDetector;
-    Timer dashJumpTimer,deadTimer;
-    HealtBar healtBar;
-    VisibleOnScreenNotifier2D onScreen;
-    Control clickArea;    
+    protected GameManager gameManager;
+    protected RayCast2D floorDetector;
+    protected Timer dashJumpTimer,deadTimer;
+    protected HealtBar healtBar;
+    protected VisibleOnScreenNotifier2D onScreen;
+    protected Control clickArea;
+    protected Sprite2D sprite;    
     
     //Overrided functions-------------------------------------------------
     public override void _Ready()
@@ -61,9 +63,22 @@ public partial class EnemyUnitBase : Area2D
         clickArea = GetNode<Control>("clickArea");
         clickArea.GuiInput += OnClickAreaGuiInput;
 
+        sprite = GetNode<Sprite2D>("sprite");
+
         tickOffset = GD.Randi() % 60;
 
+        this.speed = updateToChildSpeed();
+        if(GlobalPosition.X>target.X){
+            initialVelocityDead.X *= -1;
+            velocity = new Vector2(-100,0);
+            direction = false;
+            sprite.FlipH = direction;
 
+        }
+        else{
+            velocity = new Vector2(100,0);
+        }
+        
         base._Ready();
     }
 
@@ -105,9 +120,9 @@ public partial class EnemyUnitBase : Area2D
         }
     }
 
-    private void OnDashJumpTimerTimeout()
+    protected void OnDashJumpTimerTimeout()
     {
-        //dashJump = new Vector2(100,-40);
+        UpdateDashJump();
     }
     private void OnScreenNotifierEntered()
     {
@@ -125,7 +140,7 @@ public partial class EnemyUnitBase : Area2D
     }
 
     //Custom functions----------------------------------------------------
-    public void initialize(int level){
+    public virtual void initialize(int level){
         this.level = level;
         speed = speed*level;
         speed += GD.RandRange(-20,20); 
@@ -133,11 +148,12 @@ public partial class EnemyUnitBase : Area2D
         healtBar.initializeHealthBar(maxHealt*level);
         target = gameManager.PlayerBasePosition;
         directionToObjective = GlobalPosition.DirectionTo(target);
-        
-
     }
 
-    private void move(float delta)
+    public virtual void move(float delta){
+        moveWithSpeed(delta,speed);
+    }
+    public void moveWithSpeed(float delta, int speed)
     {
         if(!isDead){
             isOnFloor = floorDetector.IsColliding();
@@ -151,7 +167,6 @@ public partial class EnemyUnitBase : Area2D
                 
             }
             else{
-                dashJump = Vector2.Zero;
                 velocity = directionToObjective.Normalized().Round() * speed + dashJump;
                 this.GlobalPosition += velocity*delta;
             }
@@ -217,10 +232,19 @@ public partial class EnemyUnitBase : Area2D
     }
 
 
+    public virtual int updateToChildSpeed()
+    {
+        return speed;
+    }
+    
+    public virtual void UpdateDashJump()
+    {
+        dashJump = new Vector2(0,0);
+    }
     public Vector2 Target{get{return target;} set{target = value;}}
     public Vector2 CurrentPosition{get{return currentPosition;}}
     public Vector2 LastPosition{get{return lastPosition;}}
     public Vector2 DirectionToObjective{get{return directionToObjective;}}
-    public int Speed{get{return speed;}}
+    public int Speed{get{return speed;} set{speed = value;}}
 
 }

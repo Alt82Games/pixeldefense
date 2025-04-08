@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnooqy0e1dob8"]
+[gd_scene load_steps=4 format=3 uid="uid://dnooqy0e1dob8"]
 
 [ext_resource type="Script" uid="uid://dtm0lgfvkk3o2" path="res://components/Hud.cs" id="1_636fb"]
 [ext_resource type="PackedScene" uid="uid://r53bd8ictwv0" path="res://components/general_button.tscn" id="2_nk167"]
+[ext_resource type="PackedScene" uid="uid://bocxo3ojhbh3j" path="res://components/skill_icon.tscn" id="3_gbh6h"]
 
 [node name="hud" type="CanvasLayer"]
 script = ExtResource("1_636fb")
@@ -100,3 +101,32 @@ layout_mode = 2
 text = "Upgrade 
 button 3"
 skillUpgradeNumber = 3
+
+[node name="skills" type="HBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_right = 70.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="skillIcon" parent="skills" instance=ExtResource("3_gbh6h")]
+layout_mode = 2
+tint_progress = Color(1, 1, 1, 0.47451)
+waitTime = 4.0
+
+[node name="skillIcon2" parent="skills" instance=ExtResource("3_gbh6h")]
+layout_mode = 2
+tint_progress = Color(1, 1, 1, 0.47451)
+waitTime = 7.0
+
+[node name="skillIcon3" parent="skills" instance=ExtResource("3_gbh6h")]
+layout_mode = 2
+tint_progress = Color(1, 1, 1, 0.47451)
+waitTime = 5.0
+
+[node name="skillIcon4" parent="skills" instance=ExtResource("3_gbh6h")]
+layout_mode = 2
+tint_progress = Color(1, 1, 1, 0.47451)
+waitTime = 10.0

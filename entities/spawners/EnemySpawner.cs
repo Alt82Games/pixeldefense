@@ -5,7 +5,7 @@ public partial class EnemySpawner : Area2D
 {
     //Variables and constants---------------------------------------------
     static int MAX_ENEMY_COUNT = 200;
-    static PackedScene [] scenes = [GD.Load<PackedScene>("res://entities/enemy_unit_base.tscn")];
+    static PackedScene [] scenes = [GD.Load<PackedScene>("res://entities/slime.tscn")];
     //Node references-----------------------------------------------------
     GameManager gameManager;
     Timer spawnTimer;
