@@ -74,7 +74,7 @@ public partial class SkillIcon : TextureProgressBar
     //Custom functions----------------------------------------------------
     public void getActionList(){
         foreach(InputEventKey actionEvent in InputMap.ActionGetEvents(activationKey)){
-            GD.Print(activationKey + ": " +actionEvent.PhysicalKeycode);
+            //GD.Print(activationKey + ": " +actionEvent.PhysicalKeycode);
             keysInAction.Add(OS.GetKeycodeString(actionEvent.PhysicalKeycode));
         }
     }

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://8ko6bfa2p6x4"]
+
+[ext_resource type="PackedScene" uid="uid://b5x2afn2mw05g" path="res://entities/enemy_unit_base.tscn" id="1_gg2f0"]
+[ext_resource type="Script" uid="uid://cag5wk6mcinkx" path="res://entities/EnemyFlyingUnitBase.cs" id="2_elbqk"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_elbqk"]
+
+[node name="enemyFlyingUnitBase" instance=ExtResource("1_gg2f0")]
+script = ExtResource("2_elbqk")
+
+[node name="sprite" parent="." index="0"]
+self_modulate = Color(1, 0.777892, 0.573197, 1)
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_elbqk")
+}

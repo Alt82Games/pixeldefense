@@ -113,20 +113,16 @@ grow_horizontal = 2
 
 [node name="skillIcon" parent="skills" instance=ExtResource("3_gbh6h")]
 layout_mode = 2
-tint_progress = Color(1, 1, 1, 0.47451)
 waitTime = 4.0
 
 [node name="skillIcon2" parent="skills" instance=ExtResource("3_gbh6h")]
 layout_mode = 2
-tint_progress = Color(1, 1, 1, 0.47451)
 waitTime = 7.0
 
 [node name="skillIcon3" parent="skills" instance=ExtResource("3_gbh6h")]
 layout_mode = 2
-tint_progress = Color(1, 1, 1, 0.47451)
 waitTime = 5.0
 
 [node name="skillIcon4" parent="skills" instance=ExtResource("3_gbh6h")]
 layout_mode = 2
-tint_progress = Color(1, 1, 1, 0.47451)
 waitTime = 10.0

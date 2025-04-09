@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://qmym34duvg65"]
+
+[ext_resource type="PackedScene" uid="uid://bimopotdb6x5q" path="res://entities/projectile_base.tscn" id="1_rx853"]
+[ext_resource type="Script" uid="uid://dybxi7ynpxbyd" path="res://levels/ProjectileThunder.cs" id="2_lu7pj"]
+[ext_resource type="Texture2D" uid="uid://hjp4y5u1givx" path="res://art/lightning_1.png" id="3_8gu0a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lu7pj"]
+radius = 266.227
+
+[sub_resource type="Curve" id="Curve_lu7pj"]
+_data = [Vector2(0, 0.235955), 0.0, 0.0, 0, 0, Vector2(0.888298, 0.853933), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="projectileThunder" instance=ExtResource("1_rx853")]
+script = ExtResource("2_lu7pj")
+speed = 800
+projectileDamage = 30.0
+jumps = 40
+projectileDamage = 30.0
+
+[node name="Sprite2D" parent="." index="0"]
+self_modulate = Color(0.215686, 0.729412, 1, 1)
+
+[node name="despawnTimer" parent="." index="2"]
+wait_time = 10.0
+
+[node name="updateTargetPosition" type="Timer" parent="." index="4"]
+wait_time = 0.1
+autostart = true
+
+[node name="jumpArea" type="Area2D" parent="." index="5"]
+visible = false
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="jumpArea" index="0"]
+shape = SubResource("CircleShape2D_lu7pj")
+
+[node name="chain" type="Line2D" parent="." index="6"]
+top_level = true
+points = PackedVector2Array(405, 356, 761, 125, 893, 277, 1063, 236)
+width = 16.0
+width_curve = SubResource("Curve_lu7pj")
+texture = ExtResource("3_8gu0a")
+texture_mode = 1
+joint_mode = 2

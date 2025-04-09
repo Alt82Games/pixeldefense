@@ -1,11 +1,15 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class EnemySpawner : Area2D
 {
     //Variables and constants---------------------------------------------
-    static int MAX_ENEMY_COUNT = 200;
-    static PackedScene [] scenes = [GD.Load<PackedScene>("res://entities/slime.tscn")];
+    [Export] int enemyToSpawn = 0;
+    int indexToSpawn = 0;
+    static int MAX_ENEMY_COUNT = 250;
+    static PackedScene [] scenes = [GD.Load<PackedScene>("res://entities/slime.tscn"),
+                                    GD.Load<PackedScene>("res://entities/bat.tscn"),];
     //Node references-----------------------------------------------------
     GameManager gameManager;
     Timer spawnTimer;
@@ -35,7 +39,13 @@ public partial class EnemySpawner : Area2D
 
     //Custom functions----------------------------------------------------
     public void spawn(){
-        EnemyUnitBase instance = (EnemyUnitBase)scenes[0].Instantiate();
+        if(enemyToSpawn == 0 || enemyToSpawn > scenes.Count()){
+            indexToSpawn = GD.RandRange(0,scenes.Count()-1);
+        }
+        else{
+            indexToSpawn = enemyToSpawn -1;
+        }
+        EnemyUnitBase instance = (EnemyUnitBase)scenes[indexToSpawn].Instantiate();
         instance.GlobalPosition = this.GlobalPosition + new Vector2(0,GD.RandRange(-50,50));
         AddSibling(instance);
         gameManager.EnemyCount += 1;

@@ -18,20 +18,23 @@ public partial class MainCamera : Camera2D
     }
     public override void _PhysicsProcess(double delta)
     {
-        moveCamera();
+        moveCamera((float)delta);
         base._PhysicsProcess(delta);
     }
 
-    private void moveCamera()
+    private void moveCamera(float delta)
     {
         if(Input.IsActionPressed ("Up")){
-            GlobalPosition -= cameraUD;
+            if(GlobalPosition.Y - GetViewportRect().Size.Y/2 >= LimitTop)
+                GlobalPosition -= cameraUD;
         }
         if(Input.IsActionPressed ("Down")){
+            if(GlobalPosition.Y + GetViewportRect().Size.Y/2 <= LimitBottom)
             GlobalPosition += cameraUD;
         }
         if(Input.IsActionPressed ("Left")){
-            GlobalPosition -= cameraLR;
+            if(GlobalPosition.X - GetViewportRect().Size.X/2 >= LimitLeft)
+                GlobalPosition -= cameraLR;
             /*
             if(cameraTargetIndex -1 >= 0){
                 cameraTargetIndex -= 1;
@@ -39,6 +42,7 @@ public partial class MainCamera : Camera2D
             */
         }
         if(Input.IsActionPressed ("Right")){
+            if(GlobalPosition.X + GetViewportRect().Size.X/2 <= LimitRight)
             GlobalPosition += cameraLR;
             /*
             if(cameraTargetIndex +1 < zoom.Length){
@@ -47,37 +51,23 @@ public partial class MainCamera : Camera2D
             */
         }
         if(Input.IsActionJustReleased("ZoomIn")){
-            if (currentZoom < maxZoom){
-                currentZoom += zoomStep;
-                if(currentZoom > maxZoom){
-                    currentZoom = maxZoom;
+            if (Zoom < maxZoom){
+                Zoom += zoomStep;
+                if(Zoom > maxZoom){
+                    Zoom = maxZoom;
                 }
             }
         }
             
         
         if(Input.IsActionJustReleased("ZoomOut")){
-            if (currentZoom > minZoom){
-                currentZoom -= zoomStep;
-                if(currentZoom < minZoom){
-                    currentZoom = minZoom;
+            if (Zoom > minZoom){
+                Zoom -= zoomStep;
+                if(Zoom < minZoom){
+                    Zoom = minZoom;
                 }
             }
         }
-
-        if(Zoom < currentZoom){
-            Zoom += zoomStep/10;
-            if (Zoom > maxZoom){
-                Zoom = maxZoom;
-            }
-        }
-        else if(Zoom > currentZoom){
-            Zoom -= zoomStep/10;
-            if (Zoom < minZoom){
-                Zoom = minZoom;
-            }
-        }
-
     }
 /*
     public void updateZoom(){

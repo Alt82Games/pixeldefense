@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://bk0vvxsq2lag3"]
+
+[ext_resource type="PackedScene" uid="uid://8ko6bfa2p6x4" path="res://entities/enemy_flying_unit_base.tscn" id="1_4nvwa"]
+[ext_resource type="Texture2D" uid="uid://d0obppmiwqokk" path="res://art/Bat1_V2.png" id="2_hlh2i"]
+
+[sub_resource type="Animation" id="Animation_cehtf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_hlh2i"]
+resource_name = "new_animation"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cehtf"]
+_data = {
+&"RESET": SubResource("Animation_cehtf"),
+&"fly": SubResource("Animation_hlh2i")
+}
+
+[node name="bat" instance=ExtResource("1_4nvwa")]
+
+[node name="sprite" parent="." index="0"]
+texture = ExtResource("2_hlh2i")
+hframes = 8
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_cehtf")
+}
+autoplay = "fly"

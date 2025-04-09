@@ -67,7 +67,7 @@ public partial class GameManager : Node2D
     public List<Node2D> queueFreeList = new List<Node2D>();
     private void queueFreeManager(){
         if(queueFreeList.Any()){
-            for (int i = 0; i<20; i++){
+            for (int i = 0; i<30; i++){
                 if(queueFreeList.Any()){
                     queueFreeList[0].QueueFree();
                     queueFreeList.RemoveAt(0);
@@ -76,9 +76,6 @@ public partial class GameManager : Node2D
                     break;
                 }
             }
-        }
-        else{
-            queueFreeList.Clear();
         }
     }
 

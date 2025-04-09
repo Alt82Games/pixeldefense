@@ -15,7 +15,6 @@ script = ExtResource("1_2784f")
 [node name="sprite" type="Sprite2D" parent="."]
 self_modulate = Color(0, 1, 0, 1)
 texture = ExtResource("2_3b8kj")
-flip_h = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 

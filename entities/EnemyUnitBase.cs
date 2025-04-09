@@ -6,7 +6,7 @@ public partial class EnemyUnitBase : Area2D
     //Variables and constants---------------------------------------------
     protected float maxHealt = 100;
     protected float currentHealt = 100;
-    protected int speed = 200;
+    protected int speed = 100;
     protected bool isOnFloor = false;
 
     protected bool direction = true;
@@ -68,6 +68,7 @@ public partial class EnemyUnitBase : Area2D
         tickOffset = GD.Randi() % 60;
 
         this.speed = updateToChildSpeed();
+
         if(GlobalPosition.X>target.X){
             initialVelocityDead.X *= -1;
             velocity = new Vector2(-100,0);
@@ -77,16 +78,34 @@ public partial class EnemyUnitBase : Area2D
         }
         else{
             velocity = new Vector2(100,0);
+            direction = true;
+            sprite.FlipH = direction;
         }
-        
         base._Ready();
     }
 
+    public void flip(bool toFlip){
+        if(toFlip){
+            if(initialVelocityDead.X < 0){
+                initialVelocityDead.X *= -1;
+            }
+
+            direction = false;
+            sprite.FlipH = direction; 
+        }
+        else{
+            if(initialVelocityDead.X > 0){
+                initialVelocityDead.X *= -1;
+            }
+            direction = true;
+            sprite.FlipH = direction;
+        }
+    }
     public override void _PhysicsProcess(double delta)
     {
         if((((long)Engine.GetPhysicsFrames() + tickOffset) % (gameManager.SkipFrames + 1)) == 0){
             move((float)delta);
-
+            flip(GlobalPosition.X>target.X);
         }
         
         base._PhysicsProcess(delta);
@@ -151,38 +170,47 @@ public partial class EnemyUnitBase : Area2D
     }
 
     public virtual void move(float delta){
-        moveWithSpeed(delta,speed);
-    }
-    public void moveWithSpeed(float delta, int speed)
-    {
         if(!isDead){
-            isOnFloor = floorDetector.IsColliding();
-            if(!isOnFloor){
-                //TODO: Set terminal velocity for objects falling
-                dashJump = Vector2.Zero;
-                this.GlobalPosition += velocity*delta-gravity*delta;
-                if(velocity.Y < gravity.Y*2){
-                    velocity     += gravity*delta;
+            if(GlobalPosition.DistanceTo(target) > 5){
+                isOnFloor = floorDetector.IsColliding();
+                if(!isOnFloor){
+                    //TODO: Set terminal velocity for objects falling
+                    dashJump = Vector2.Zero;
+                    this.GlobalPosition += velocity*delta-gravity*delta;
+                    if(velocity.Y < gravity.Y*2){
+                        velocity     += gravity*delta;
+                    }
+                    
                 }
-                
+                else{
+                    velocity = directionToObjective.Normalized().Round() * speed + dashJump;
+                    this.GlobalPosition += velocity*delta;
+                }
+                directionToObjective = GlobalPosition.DirectionTo(target);
             }
             else{
-                velocity = directionToObjective.Normalized().Round() * speed + dashJump;
-                this.GlobalPosition += velocity*delta;
+                dead();
             }
+            
         }
         else{
-            this.GlobalPosition += initialVelocityDead*delta-gravityDead*delta;
-		    initialVelocityDead += gravityDead;
-            if(Modulate.A > 0.1f){
-                Modulate -= new Color (0,0,0,1f*delta);
-            }
-            if(RotationDegrees < 350){
-                RotationDegrees += 90*delta;
-            }
-            else{
-                RotationDegrees = 0;
-            }
+            dieMovement(delta);
+        }
+        
+    }
+
+    public void dieMovement(float delta){
+        this.SetCollisionLayerValue(2, false);
+        this.GlobalPosition += initialVelocityDead*delta-gravityDead*delta;
+		initialVelocityDead += gravityDead;
+        if(Modulate.A > 0.1f){
+            Modulate -= new Color (0,0,0,1f*delta);
+        }
+        if(RotationDegrees < 350){
+            RotationDegrees += 90*delta;
+        }
+        else{
+            RotationDegrees = 0;
         }
     }
 
@@ -207,7 +235,7 @@ public partial class EnemyUnitBase : Area2D
         
     }
 
-    public void reciveDamage(int damage){
+    public void reciveDamage(float damage){
         if(!isDead){
             currentHealt -= damage;
             healtBar.receiveDamage(currentHealt);
@@ -246,5 +274,6 @@ public partial class EnemyUnitBase : Area2D
     public Vector2 LastPosition{get{return lastPosition;}}
     public Vector2 DirectionToObjective{get{return directionToObjective;}}
     public int Speed{get{return speed;} set{speed = value;}}
+    public bool IsDead{get{return isDead;}}
 
 }

@@ -3,4 +3,8 @@
 [ext_resource type="Script" uid="uid://b0ocdikpm1tqe" path="res://components/MainCamera.cs" id="1_28ott"]
 
 [node name="MainCamera" type="Camera2D"]
+limit_left = -1000
+limit_top = -1440
+limit_right = 2280
+limit_bottom = 720
 script = ExtResource("1_28ott")

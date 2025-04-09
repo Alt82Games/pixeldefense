@@ -6,14 +6,17 @@ using System.Linq;
 public partial class ProjectileSpawner : Area2D
 {
     //Variables and constants---------------------------------------------
-    static int MAX_PROJECTILE_COUNT = 150;
-    [Export]int projectileDamage = 50;
+    static int MAX_PROJECTILE_COUNT = 200;
+    [Export] protected int projectileToSpawn = 2;
+    [Export] protected float projectileDamageMultiplier = 1;
+    protected int indexToSpawn = 0;
     List<Node2D> targets = new List<Node2D>();
     
     //Node references-----------------------------------------------------
     GameManager gameManager;
     Timer spawnTimer;
-    static PackedScene [] scenes = [GD.Load<PackedScene>("res://entities/projectile_base.tscn")];
+    static PackedScene [] scenes = [GD.Load<PackedScene>("res://entities/projectile_base.tscn"),
+                                    GD.Load<PackedScene>("res://levels/projectile_thunder.tscn")];
     EnemyUnitBase target = null;
     
     //Overrided functions-------------------------------------------------
@@ -58,14 +61,20 @@ public partial class ProjectileSpawner : Area2D
 
     //Custom functions----------------------------------------------------
     public void spawn(){
+         if(projectileToSpawn == 0 || projectileToSpawn > scenes.Count()){
+            indexToSpawn = GD.RandRange(0,scenes.Count()-1);
+        }
+        else{
+            indexToSpawn = projectileToSpawn -1;
+        }
         getClosestTarget();
         if(target != null){
-            ProjectileBase instance = (ProjectileBase)scenes[0].Instantiate();
+            ProjectileBase instance = (ProjectileBase)scenes[indexToSpawn].Instantiate();
             AddSibling(instance);
             instance.GlobalPosition = this.GlobalPosition;
             gameManager.ProjectileCount += 1;
             //instance.initialize(target);
-            instance.setObjective(target,GlobalPosition,projectileDamage);
+            instance.initialize(target, GlobalPosition, projectileDamageMultiplier);
         }
         
     }

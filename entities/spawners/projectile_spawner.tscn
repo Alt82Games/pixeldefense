@@ -10,13 +10,11 @@ size = Vector2(1998, 620)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_xli1f")
-projectileDamage = 100
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_cipm7")
 
 [node name="spawnTimer" type="Timer" parent="."]
-wait_time = 0.25
 autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -4,8 +4,8 @@ using System;
 public partial class ProjectileBase : Area2D
 {
     //Variables and constants---------------------------------------------
-    [Export]int speed = 250;
-    [Export]int projectileDamage = 0;
+    protected int speed = 250;
+    [Export]protected float projectileDamage = 75;
 
     //TODO: Change pierce when the upgrade system is on progress, get it from GameManager
     protected int enemiesToPierce = 0;
@@ -16,8 +16,8 @@ public partial class ProjectileBase : Area2D
 	Vector2 velocity = new Vector2(100,0); //TODO: Make it for the two directions
     Vector2 targetDirection = new Vector2(1,0);
     Vector2 dashJump = Vector2.Zero;
-    Vector2 directionToObjective = Vector2.Zero;
-    EnemyUnitBase target;
+    protected Vector2 directionToObjective = Vector2.Zero;
+    protected EnemyUnitBase target;
     Vector2 targetInitialPosition,lastPosition;
     Vector2 targetPredictedPosition,targetPredictedPositionTuned;
     double lastDelta = 0;
@@ -45,6 +45,7 @@ public partial class ProjectileBase : Area2D
 
         tickOffset = GD.Randi() % 60;
 
+        updateToChildData();
 
         base._Ready();
     }
@@ -95,25 +96,12 @@ public partial class ProjectileBase : Area2D
     {
         if(area.IsInGroup("Enemy")){
             
-            EnemyUnitBase a = (EnemyUnitBase)area;
-            a.reciveDamage(projectileDamage);
-            enemiesToPierce --;
-            if(enemiesToPierce < 0 && !isUsed){
-                isUsed = true;
-                clearProjectile();
-            }
+            hitTarget((EnemyUnitBase)area);
         }
     }
 
     //Custom functions----------------------------------------------------<
-    public void initialize(EnemyUnitBase target){
-        this.target = target;
-        directionToObjective = GlobalPosition.DirectionTo(this.target.GlobalPosition);
-        
-
-    }
-
-    private void move(float delta)
+    protected virtual void move(float delta)
     {
      GlobalPosition += directionToObjective * speed*delta;   
     }
@@ -144,11 +132,11 @@ public partial class ProjectileBase : Area2D
         }
     }
 
-    public void setObjective(Node2D obje,Vector2 GlobalPosition, int damage){
+    public virtual void initialize(EnemyUnitBase obje,Vector2 GlobalPosition,float projectileDamageMultiplier){
+        projectileDamage *= projectileDamageMultiplier;
         this.GlobalPosition = GlobalPosition;
-        this.projectileDamage = damage;
         if(obje != null){
-            target = (EnemyUnitBase)obje;
+            target = obje;
             targetInitialPosition = target.GlobalPosition;
             Vector2 targetPredictedPositionLocal = calculateInterceptionPoint(this.GlobalPosition.DistanceTo(target.GlobalPosition));
 
@@ -158,8 +146,19 @@ public partial class ProjectileBase : Area2D
         
     }
 
+    public virtual void updateToChildData(){
+        this.speed = speed;
+        this.projectileDamage = projectileDamage;
+    }
 
-
+    public virtual void hitTarget(EnemyUnitBase area){
+            area.reciveDamage(projectileDamage);
+            enemiesToPierce --;
+            if(enemiesToPierce < 0 && !isUsed){
+                isUsed = true;
+                clearProjectile();
+            }
+    }
     public EnemyUnitBase Target{get{return target;} set{target = value;}}
     public Vector2 DirectionToObjective{get{return directionToObjective;}}
 }
